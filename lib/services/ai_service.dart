@@ -12,7 +12,7 @@ Future<String> getCareerAdvice(String question) async {
   };
 
   final body = json.encode({
-    "model": "openrouter/gpt-3.5-turbo",
+    "model": "deepseek/deepseek-r1-0528:free",
     "messages": [
       {
         "role": "system",

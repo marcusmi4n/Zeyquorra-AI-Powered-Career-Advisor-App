@@ -27,7 +27,7 @@ class _CareerAdvisorState extends State<CareerAdvisor> {
     });
 
     await Supabase.instance.client.from('messages').insert({
-      'user': 'student_001',
+      'username': 'student_001',
       'question': userMessage,
       'response': aiResponse,
     });
