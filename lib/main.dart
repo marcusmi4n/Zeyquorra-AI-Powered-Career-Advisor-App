@@ -1,37 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:zeyquorra/screens/home_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(
+      fileName:
+          "/home/grimian/Documents/OPP/Zeyquorra-AI-Powered-Career-Advisor-App/.env");
 
-  try {
-    await dotenv.load(fileName: ".env");
-    print("✅ .env loaded");
-  } catch (e) {
-    print("❌ .env loading failed: $e");
-  }
+  await Supabase.initialize(
+    url: dotenv.env['SUPABASE_URL']!,
+    anonKey: dotenv.env['SUPABASE_KEY']!,
+  );
 
-  try {
-    final supabaseUrl = dotenv.env['SUPABASE_URL'];
-    final supabaseKey = dotenv.env['SUPABASE_KEY'];
+  runApp(ZeyquorraApp());
+}
 
-    if (supabaseUrl == null || supabaseKey == null) {
-      throw Exception("Missing Supabase credentials in .env");
-    }
-
-    await Supabase.initialize(
-      url: supabaseUrl,
-      anonKey: supabaseKey,
+class ZeyquorraApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Zeyquorra',
+      theme: ThemeData(primarySwatch: Colors.deepPurple),
+      home: HomeScreen(),
     );
-    print("✅ Supabase initialized");
-  } catch (e) {
-    print("❌ Supabase init failed: $e");
   }
-
-  runApp(const MaterialApp(
-    home: Scaffold(
-      body: Center(child: Text('Zeyquorra is alive ✅')),
-    ),
-  ));
 }
